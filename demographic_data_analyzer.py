@@ -11,9 +11,11 @@ def calculate_demographic_data(print_data=True):
     # What is the average age of men?
     avv= df.loc[df['sex'] == 'Male','age']
     average_age_men =round(avv.mean() , 1)
+    
     # What is the percentage of people who have a Bachelor's degree?
     per = df['education'].value_counts(normalize=True)*100
     percentage_bachelors = round(per.Bachelors,1)
+    
     # What percentage of people with advanced education (`Bachelors`, `Masters`, or `Doctorate`) make more than 50K?
     # What percentage of people without advanced education make more than 50K?
   
@@ -22,6 +24,7 @@ def calculate_demographic_data(print_data=True):
     high_edu = higher_education['salary'].value_counts(normalize = True) * 100
     lower_education = df[(df['education'] != 'Bachelors') & (df['education'] != 'Masters') & (df['education'] != 'Doctorate')]
     low_edu = lower_education['salary'].value_counts(normalize = True) * 100
+    
     # percentage with salary >50K
     higher_education_rich = round(high_edu.loc['>50K'],1)
     lower_education_rich = round(low_edu.loc['>50K'],1)
@@ -32,11 +35,9 @@ def calculate_demographic_data(print_data=True):
     # What percentage of the people who work the minimum number of hours per week have a salary of >50K?
     minu = df[df['hours-per-week'] == min_work_hours ]
     num_min_workers = minu['salary'].value_counts(normalize = True)*100
-
     rich_percentage = num_min_workers.loc['>50K']
 
     # What country has the highest percentage of people that earn >50K?
-  
     hi =df.groupby('native-country')
     tot =round(hi['salary'].value_counts(normalize = True)*100 , 2)
     country3 = tot.reset_index(name='percentage')
